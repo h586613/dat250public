@@ -1,21 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="https://www.hvl.no/250/courses"
-           xmlns="https://www.hvl.no/250/courses"
-           elementFormDefault="qualified"
-           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://www.hvl.no/250/courses" xmlns="https://www.hvl.no/250/courses" elementFormDefault="qualified">
+
   <xs:element name="courses">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="course"/>
+        <xs:element name="course" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="semester" type="xs:string"/>
+              <xs:element name="lecturers">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="lecturer" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="email" type="xs:string" use="required"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ects" type="xs:integer"/>
+              <xs:element name="level" type="xs:string"/>
+
+              <xs:element name="schedule">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="lecture">
+                      <xs:complexType>
+                        <xs:attribute name="day" type="xs:string" use="required"/>
+                        <xs:attribute name="start" type="xs:string" use="required"/>
+                        <xs:attribute name="end" type="xs:string" use="required"/>
+                        <xs:attribute name="location" type="xs:string" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="exercise">
+                      <xs:complexType>
+                        <xs:attribute name="day" type="xs:string" use="required"/>
+                        <xs:attribute name="start" type="xs:string" use="required"/>
+                        <xs:attribute name="end" type="xs:string" use="required"/>
+                        <xs:attribute name="location" type="xs:string" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+
+
+              <xs:element name="students">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="student" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="firstname" type="xs:string"/>
+                          <xs:element name="lastname" type="xs:string"/>
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:string" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="code" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="course">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="semester" type="xs:string" />
-      </xs:sequence>
-      <xs:attribute name="code" type="xs:string"/>
-    </xs:complexType>
-  </xs:element>
+
 </xs:schema>
